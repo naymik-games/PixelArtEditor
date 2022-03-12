@@ -1,0 +1,27 @@
+.container-custom {
+  margin-left: 50px;
+  margin-top: 15px;
+}
+#can-main {
+  border: 3px solid #4287f5;
+  background-image: url('grid15.png');
+  background-position: 105px 105px;
+  background-repeat: repeat;
+}
+label {
+    display: inline-block; 
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+.row {
+  margin-bottom: 0;
+}
+.selected {
+  background-color: #26a69a;
+}
+#colorpick{
+  margin: 0;
+  border: 0;
+  margin-left: 5px;
+  height: 2em;
+}

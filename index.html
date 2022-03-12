@@ -1,0 +1,172 @@
+<!doctype html>
+<meta charset="utf-8">
+
+<head>
+
+
+	<!-- Compiled and minified CSS -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+	<!-- Compiled and minified JavaScript -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+	<link rel="stylesheet" href="css/style.css">
+	<script src="js/pixel-art-editor.js"></script>
+	<script src="js/jscolor.js"></script>
+	<script src="https://unpkg.com/hotkeys-js/dist/hotkeys.min.js"></script>
+
+
+	<script>
+		// Here we can adjust defaults for all color pickers on page:
+		jscolor.presets.default = {
+			palette: [
+				'#000000', '#7d7d7d', '#870014', '#ec1c23', '#ff7e26', '#fef100', '#22b14b', '#00a1e7', '#3f47cc', '#a349a4',
+				'#ffffff', '#c3c3c3', '#b87957', '#feaec9', '#ffc80d', '#eee3af', '#b5e61d', '#99d9ea', '#7092be', '#c8bfe7',
+			],
+			format: 'rgba',
+			//paletteCols: 12,
+			hideOnPaletteClick: true,
+			closeButton: true,
+			width: 150,
+			//height: 151,
+			//position: 'right',
+			//previewPosition: 'right',
+			//backgroundColor: 'rgba(51,51,51,1)', controlBorderColor: 'rgba(153,153,153,1)', buttonColor: 'rgba(240,240,240,1)',
+		}
+	</script>
+
+
+</head>
+
+<body>
+	<div class="container-custom">
+
+		<div class="row ">
+			<div id="options" class="col s12 m1">
+
+				<h6>Create New</h6>
+
+
+				<div class="input-field">
+					<label for="picW">Width</label>
+					<input type="number" id="picW" min="10" max="55" value="34">
+
+				</div>
+				<div class="input-field">
+					<label for="picH"> Height</label>
+					<input type="number" id="picH" min="10" max="55" value="40">
+
+				</div>
+
+
+
+
+
+				<button class="button-primary btn-small" onclick="newEditor()">New</button>
+				<h6>Options</h6>
+				<div class="input-field">
+					<label for="bgcolor" class="active"> BG Color</label>
+					<input type="color" id="bgcolor" value="#ffffff">
+					<input type="text" id="bgcolor-display" value="#ffffff">
+				</div>
+
+				<p>COO</p>
+				<div class="input-field">
+
+					<input type="text" id="coo" size="8">
+				</div>
+
+				<p>
+
+					<label>
+						<input type="checkbox" class="filled-in" checked="checked" onclick="toggleGrid()" />
+						<span>Grid?</span>
+					</label>
+				</p>
+
+			</div>
+			<div id="editor" class="col s12 m11">
+				<div class="row">
+					<div class="row">
+						<div class="col s12" id="buttons">
+							<a class="waves-effect waves-light btn-small" id="save"><i class="material-icons left">save</i>Save</a>
+							<a class="waves-effect waves-light btn-small" id="load"><i
+									class="material-icons left">file_upload</i>Load</a>
+							<a class="waves-effect waves-light btn-small" id="undo"><i class="material-icons left">undo</i>Undo</a>
+							<a class="waves-effect waves-light btn-small" id="delete"><i
+									class="material-icons left">undo</i>delete</a>
+
+
+						</div>
+					</div>
+					<div class="input-field col s5" id="tool-icons">
+
+						<!-- <label>Materialize Select</label> -->
+						<a onclick="setTool('d')" class="btn-flat selected" id="d"><i class="material-icons">brush</i></a>
+						<a onclick="setTool('l')" class="btn-flat" id="l"><i class="material-icons">show_chart</i></a>
+						<a onclick="setTool('f')" class="btn-flat" id="f"><i class="material-icons">format_color_fill</i></a>
+						<a onclick="setTool('r')" class="btn-flat" id="r"><i class="material-icons">stop</i></a>
+						<a onclick="setTool('o')" class="btn-flat" id="o"><i class="material-icons">crop_square</i></a>
+						<a onclick="setTool('c')" class="btn-flat" id="c"><i class="material-icons">radio_button_unchecked</i></a>
+						<a onclick="setTool('p')" class="btn-flat" id="p"><i class="material-icons">colorize</i></a>
+						<a onclick="setTool('e')" class="btn-flat" id="e"><i class="material-icons">backspace</i></a>
+					</div>
+					<div class="input-field col s4">
+						<i class="material-icons">palette</i>
+						<input data-jscolor="{}" value="#000000" class="active" id="colorpick" style="width: 50%;">
+
+					</div>
+				</div>
+
+
+
+			</div>
+		</div>
+
+
+	</div>
+<div class="row">
+	<div class="input-field col s4 offset-s1">
+		<i class="material-icons prefix">mode_edit</i>
+		<select id="tools" class="browser-default" style="margin-left: 30px; width: 90%;">
+			<option value="draw" selected>Draw</option>
+			<option value="line">Line</option>
+			<option value="fill">Fill</option>
+			<option value="rectangle">Rectangle-Solid</option>
+			<option value="rectangleOutline">Rectangle-Outline</option>
+			<option value="circle">Circle</option>
+			<option value="pick">Pick Color</option>
+			<option value="erase">Erase</option>
+			<option value="select">Select</option>
+		</select>
+	</div>
+</div>
+	<script>
+		//document.querySelector("div")
+		newEditor()
+		document.addEventListener('DOMContentLoaded', function () {
+			var elems = document.querySelectorAll('select');
+			var instances = M.FormSelect.init(elems, options);
+		});
+	</script>
+	<script type="text/javascript">
+		hotkeys('ctrl+a,ctrl+b,d,l,f,r,o,c,p,e', function (event, handler) {
+			setTool(handler.key)
+			/* 	switch (handler.key) {
+					case 'ctrl+a': alert('you pressed ctrl+a!');
+						break;
+					case 'ctrl+b': alert('you pressed ctrl+b!');
+						break;
+					case 'r': alert('you pressed r!');
+						break;
+					case 'l': setLine();
+						break;
+					default: alert(event);
+				} */
+		});
+	</script>
+</body>
+
+</html>

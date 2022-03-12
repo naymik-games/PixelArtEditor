@@ -1,0 +1,234 @@
+<!doctype html>
+<meta charset="utf-8">
+
+<head>
+
+
+	<!-- Compiled and minified CSS -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+	<!-- Compiled and minified JavaScript -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+	<link rel="stylesheet" href="css/style.css">
+	<!-- <script src="js/script.js"></script> -->
+	
+
+<SCRIPT LANGUAGE="JavaScript">
+function testResults (form) {
+    TestVar = isNumberString (form.inputbox.value)
+	var test = form.sw.checked;
+    if (TestVar == 1)
+        alert ("Congratulations! You" + test + " entered only numbers");
+    else
+        alert ("Boo! You entered a string with non-numbers characters");
+}
+function isNumberString (InString)  {
+    if(InString.length==0) return (false);
+    var RefString="1234567890";
+    for (Count=0; Count < InString.length; Count++)  {
+        TempChar= InString.substring (Count, Count+1);
+        if (RefString.indexOf (TempChar, 0)==-1)  
+            return (false);
+    }
+    return (true);
+}
+
+
+
+
+
+
+</SCRIPT>
+	
+
+
+</head>
+
+<body>
+
+<FORM NAME="myform">
+<div class="row">
+<div class="input-field col sm2">
+<label for="title">Title</label>
+<INPUT TYPE="text" NAME="title" VALUE="" id="title">
+</div>
+<div class="input-field col sm2">
+<label for="goal">Moves Goal</label>
+<INPUT TYPE="text" NAME="goal" VALUE="" id="goal">
+</div>
+</div>
+<div class="row">
+  <div class="switch col sm2">
+    <label>
+      false
+      <input type="checkbox" name="wild" id="wild">
+      <span class="lever"></span>
+      true
+    </label>
+  </div>
+  <div class="input-field col sm2">
+	<label for="wildMax">Max</label>
+	<INPUT TYPE="number" NAME="wildMax" VALUE="0" id="wildMax">
+	</div>
+  <div class="input-field col sm2">
+	<label for="wildTotalMax">Max</label>
+	<INPUT TYPE="number" NAME="wildTotalMax" VALUE="0" id="wildTotalMax">
+	</div>
+  
+  
+
+  <div class="switch col sm2">
+    <label>
+      false
+      <input type="checkbox" name="circle" id="circle">
+      <span class="lever"></span>
+      true
+    </label>
+  </div>
+  <div class="input-field col sm2">
+	<label for="circleMax">Max</label>
+	<INPUT TYPE="text" NAME="circleMax" VALUE="0" id="circleMax">
+	</div>
+  <div class="input-field col sm2">
+	<label for="circleTotalMax">Max</label>
+	<INPUT TYPE="text" NAME="circleTotalMax" VALUE="0" id="circleTotalMax">
+	</div>
+</div>
+<div class="row">
+
+</div>
+<INPUT TYPE="button" NAME="button" Value="Click" onClick="testResults(this.form)" >
+
+</FORM>
+	<div class="container-custom">
+
+		<div class="row ">
+			<div id="options" class="col s12 m1">
+
+				<h6>Create New</h6>
+
+
+				<div class="input-field">
+					<label for="picW">Width</label>
+					<input type="number" id="picW" min="10" max="55" value="34">
+
+				</div>
+				<div class="input-field">
+					<label for="picH"> Height</label>
+					<input type="number" id="picH" min="10" max="55" value="40">
+
+				</div>
+
+
+
+
+
+				<button class="button-primary btn-small" onclick="newEditor()">New</button>
+				<h6>Options</h6>
+				<div class="input-field">
+					<label for="bgcolor" class="active"> BG Color</label>
+					<input type="color" id="bgcolor" value="#ffffff">
+					<input type="text" id="bgcolor-display" value="#ffffff">
+				</div>
+
+				<p>COO</p>
+				<div class="input-field">
+
+					<input type="text" id="coo" size="8">
+				</div>
+
+				<p>
+
+					<label>
+						<input type="checkbox" class="filled-in" checked="checked" onclick="toggleGrid()" />
+						<span>Grid?</span>
+					</label>
+				</p>
+
+			</div>
+			<div id="editor" class="col s12 m11">
+				<div class="row">
+					<div class="row">
+						<div class="col s12" id="buttons">
+							<a class="waves-effect waves-light btn-small" id="save"><i class="material-icons left">save</i>Save</a>
+							<a class="waves-effect waves-light btn-small" id="load"><i
+									class="material-icons left">file_upload</i>Load</a>
+							<a class="waves-effect waves-light btn-small" id="undo"><i class="material-icons left">undo</i>Undo</a>
+							<a class="waves-effect waves-light btn-small" id="delete"><i
+									class="material-icons left">undo</i>delete</a>
+
+
+						</div>
+					</div>
+					<div class="input-field col s5" id="tool-icons">
+
+						<!-- <label>Materialize Select</label> -->
+						<a onclick="setTool('d')" class="btn-flat selected" id="d"><i class="material-icons">brush</i></a>
+						<a onclick="setTool('l')" class="btn-flat" id="l"><i class="material-icons">show_chart</i></a>
+						<a onclick="setTool('f')" class="btn-flat" id="f"><i class="material-icons">format_color_fill</i></a>
+						<a onclick="setTool('r')" class="btn-flat" id="r"><i class="material-icons">stop</i></a>
+						<a onclick="setTool('o')" class="btn-flat" id="o"><i class="material-icons">crop_square</i></a>
+						<a onclick="setTool('c')" class="btn-flat" id="c"><i class="material-icons">radio_button_unchecked</i></a>
+						<a onclick="setTool('p')" class="btn-flat" id="p"><i class="material-icons">colorize</i></a>
+						<a onclick="setTool('e')" class="btn-flat" id="e"><i class="material-icons">backspace</i></a>
+					</div>
+					<div class="input-field col s4">
+						<i class="material-icons">palette</i>
+						<input data-jscolor="{}" value="#000000" class="active" id="colorpick" style="width: 50%;">
+
+					</div>
+				</div>
+
+
+
+			</div>
+		</div>
+
+
+	</div>
+<div class="row">
+	<div class="input-field col s4 offset-s1">
+		<i class="material-icons prefix">mode_edit</i>
+		<select id="tools" class="browser-default" style="margin-left: 30px; width: 90%;">
+			<option value="draw" selected>Draw</option>
+			<option value="line">Line</option>
+			<option value="fill">Fill</option>
+			<option value="rectangle">Rectangle-Solid</option>
+			<option value="rectangleOutline">Rectangle-Outline</option>
+			<option value="circle">Circle</option>
+			<option value="pick">Pick Color</option>
+			<option value="erase">Erase</option>
+			<option value="select">Select</option>
+		</select>
+	</div>
+</div>
+	<script>
+		//document.querySelector("div")
+		newEditor()
+		document.addEventListener('DOMContentLoaded', function () {
+			var elems = document.querySelectorAll('select');
+			var instances = M.FormSelect.init(elems, options);
+		});
+	</script>
+	<script type="text/javascript">
+		hotkeys('ctrl+a,ctrl+b,d,l,f,r,o,c,p,e', function (event, handler) {
+			setTool(handler.key)
+			/* 	switch (handler.key) {
+					case 'ctrl+a': alert('you pressed ctrl+a!');
+						break;
+					case 'ctrl+b': alert('you pressed ctrl+b!');
+						break;
+					case 'r': alert('you pressed r!');
+						break;
+					case 'l': setLine();
+						break;
+					default: alert(event);
+				} */
+		});
+	</script>
+</body>
+
+</html>

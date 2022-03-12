@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>CodePen - Map Generation Example</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+<style>
+body {
+ background-color: #ffeed6;
+}
+</style>
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<main>
+<input type="text" id="bgcolor" name="bgcolor"><br>
+<textarea name="message" id="data" rows="2" cols="90"></textarea><br>
+<button onclick="loadData()">Load</button>
+
+  <div class="container">
+  
+  <canvas id="c" width=1200 height=1200></canvas>
+  
+</div>
+<input type="text" id="filename"><br>
+<button onclick="saveImage()">Save</button>
+</main>
+
+<!-- partial -->
+  <!-- <script  src="pathfinding-browser.min.js"></script>
+  <script  src="dungeon-mine.js"></script>
+   <script  src="tiles2.js"></script> -->
+<script>
+
+
+
+/*
+let config = {
+  width: 60,
+  height: 60,
+  roomInterval: 8,
+  minRoom: 5,
+  extraDoors: 5
+}
+*/
+
+var mapdata;
+var ctx;
+var tilesize;
+var canvas;
+  
+  function drawmap() {
+    for (y = 0; y < mapData.length; y++) {
+      for (x = 0; x < mapData[0].length; x++) {
+	 // ctx.fillStyle = "blue";
+	//ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = ["#010101", "#7092be", "#22b14c", "#ed1c24", "#ff7f27", "#a349a4", "#0070c0", "#b97a57", "rgba(255, 255, 255, 0)", "#7f7f7f", "#ffc90e", "#010101","#ffffff", 
+		"#efe4b0", "#99d9ea", "#ffcc99", "#993300", "#373737", "#c3c3c3", "#626262", "#dddddd", "#4a71a4", "#324d70", "#810a10", "#f2575f", "#105625", "#45dc73", "#a64200", "#565200", "#e5ccb0", 
+		"#d9ba98", "#a89177","#bc7448", "#9b603b", "#575856", "#a4aa9b", "#424341", "#7c7f78", "#62675b", "#a35b4d", "#6a2f25", "#9a4333", 
+		"#3e221d", "#d1c4c1", "#a9937b", "#9b856d", "#85715a", "#5a6344", "#40482d", "#929e68", "#768f57", "#5d7342", "#89aabb", "#394872", "#2d3a5e", "#1e2946", 
+		"#ffdfca", "#ffd3b6", "#fdc5a2", "#f8bd9b", "#493220", "#321d0a", "#3f3244", "#2d1b35", "#bc2218", "#d24122", "#dc4122", "#dc5d22", "#e2781f", "#19c480", "#f5c525", 
+		"#ba68ca", "#9f90f7", "#654bd3", "#92d0cd", "#ffffff"][mapData[y][x]]
+        ctx.fillRect(x * tilesize, y * tilesize, tilesize, tilesize)
+      }
+    }
+	
+  
+  //room labels
+
+/*for(var i = 0; i < rooms.length; i++){
+    ctx.font = "30px Arial";
+    ctx.fillStyle = "blue";
+    ctx.textAlign = "center";
+    ctx.fillText(rooms[i].id, rooms[i].center.x * tilesize, rooms[i].center.y * tilesize);
+  }
+   ctx.strokeStyle = "#00ff00";
+ctx.strokeRect(rooms[3].center.x * tilesize, rooms[3].center.y * tilesize, tilesize, tilesize)
+
+  
+  ctx.strokeStyle = "#FF0000";
+ctx.strokeRect(rooms[3].x * tilesize, rooms[3].y * tilesize, rooms[3].size.x* tilesize, rooms[3].size.y * tilesize); */
+
+
+  }
+  
+  function loadData(){
+	  //mapData = [[11,17,17,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,8,8,8,8,8],[11,11,17,17,17,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,8,8,8,8],[11,11,11,11,17,17,17,17,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,17,8,8,8],[11,11,11,11,11,11,11,11,7,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,17,8,8],[11,11,11,11,11,11,11,11,7,7,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,17,8,8],[11,11,11,11,11,11,11,7,11,7,7,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,17,8,8],[11,11,11,11,11,11,15,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,17,17,8],[11,11,11,11,11,11,15,11,11,11,11,11,11,11,11,11,11,7,11,11,11,11,11,11,11,11,11,11,11,17,17,8],[11,11,11,11,11,11,15,15,11,11,11,11,11,11,11,11,7,7,11,11,11,7,7,11,11,11,11,11,11,17,11,8],[11,11,11,11,11,11,13,15,15,11,11,11,11,11,11,11,7,7,7,11,8,11,11,11,11,11,11,11,11,17,8,8],[11,11,11,11,11,11,13,8,15,8,7,7,7,7,7,7,11,7,15,11,11,8,8,8,11,11,11,11,17,17,8,8],[11,11,11,11,11,13,13,8,8,11,11,11,11,11,11,7,7,7,15,15,11,11,11,11,27,8,11,17,17,8,8,8],[8,11,11,11,11,13,8,8,11,12,11,11,6,12,13,11,8,15,15,11,11,11,6,12,27,8,17,17,8,8,8,8],[27,8,11,11,11,13,8,8,8,8,8,15,12,12,7,7,8,15,8,8,7,7,12,12,27,11,8,8,8,8,8,8],[15,8,11,11,11,13,8,8,8,8,8,15,15,15,7,8,8,15,15,8,8,7,15,15,27,8,8,8,8,8,8,8],[15,27,8,11,7,8,8,8,8,8,15,8,8,8,8,8,8,15,13,8,8,8,8,8,27,8,8,8,8,8,8,8],[15,27,8,15,15,8,8,8,8,8,8,8,8,8,8,8,8,15,13,8,8,8,8,8,27,8,8,8,8,8,8,8],[8,15,27,8,8,8,8,8,8,8,8,8,8,8,15,8,15,15,13,8,8,8,8,27,27,8,8,8,8,8,8,8],[27,8,8,27,8,8,8,8,8,8,8,8,8,15,15,8,8,15,15,8,7,8,8,27,8,8,8,8,8,8,8,8],[8,27,27,27,8,8,8,15,8,8,8,8,8,15,15,7,15,15,15,15,8,8,8,27,8,8,8,8,8,8,8,8],[8,8,8,27,8,8,8,15,15,8,8,8,8,8,15,15,7,7,7,7,8,8,8,27,8,8,8,8,8,8,8,8],[8,8,8,8,27,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,27,27,8,8,8,8,8,8,8,8],[8,8,8,8,27,27,8,8,8,8,8,8,8,8,8,8,8,15,15,8,8,8,27,8,8,8,8,8,8,8,8,8],[8,8,8,8,27,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,27,8,8,8,8,8,8,8,8,8],[8,8,8,8,27,8,27,8,8,8,8,8,8,8,27,27,27,27,27,27,8,27,27,8,8,8,8,8,8,8,8,8],[8,8,22,22,27,8,8,27,8,8,8,8,8,8,8,8,8,8,8,8,8,27,8,8,8,8,8,8,8,8,8,8],[8,22,22,22,27,8,8,15,27,8,8,8,8,15,7,7,7,7,15,8,27,27,8,8,8,8,8,8,8,8,8,8],[22,22,21,22,27,8,8,15,7,27,8,8,8,8,15,7,7,15,8,8,27,22,8,8,8,8,8,8,8,8,8,8],[6,6,21,22,27,8,8,15,7,7,27,27,8,8,8,15,15,8,8,27,22,22,22,8,8,8,8,8,8,8,8,8],[6,6,21,22,27,8,8,15,7,7,15,7,27,27,27,27,27,27,27,22,21,21,22,22,8,8,8,8,8,8,8,8],[6,6,6,21,22,27,8,15,7,15,15,15,7,7,17,22,22,22,22,22,21,21,21,22,22,8,8,8,8,8,8,8],[6,6,6,21,21,22,27,15,7,15,15,7,7,15,17,22,22,22,22,21,21,21,21,21,22,22,8,8,8,8,8,8]]
+		var bgColorInput = document.getElementById('bgcolor');
+		var bgcolor = bgColorInput.value;
+		if(bgcolor){
+			document.body.style.backgroundColor = bgcolor;
+		}else {
+			document.body.style.backgroundColor = "#000000";
+		}
+		
+		var textArea = document.getElementById('data');
+		var data = textArea.value
+		if(data){
+			mapData = JSON.parse(data)
+			//console.log(mapData)
+			tilesize = 10
+
+			canvas = document.getElementById('c');
+			canvas.width = mapData[0].length * tilesize;
+			canvas.height = mapData.length * tilesize;
+			ctx = canvas.getContext('2d');
+
+			drawmap();
+		} else {
+			alert('paste data array')
+		}
+			
+  }
+  function saveImage(){
+	tilesize = 1
+    canvas.width = mapData[0].length * tilesize;
+	canvas.height = mapData.length * tilesize;
+	for (y = 0; y < mapData.length; y++) {
+      for (x = 0; x < mapData[0].length; x++) {
+	 // ctx.fillStyle = "blue";
+	//ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = ["black", "#7092be", "#22b14c", "#ed1c24", "#ff7f27", "#a349a4", "#0070c0", "#b97a57", "rgba(255, 255, 255, 0)", "#7f7f7f", "#ffc90e", "#000000","#ffffff", 
+		"#efe4b0", "#99d9ea", "#ffcc99", "#993300", "#373737", "#c3c3c3", "#626262", "#dddddd", "#4a71a4", "#324d70", "#810a10", "#f2575f", "#105625", "#45dc73", "#a64200", "#565200", "#e5ccb0", 
+		"#d9ba98", "#a89177","#bc7448", "#9b603b", "#575856", "#a4aa9b", "#424341", "#7c7f78", "#62675b", "#a35b4d", "#6a2f25", "#9a4333", 
+		"#3e221d", "#d1c4c1", "#a9937b", "#9b856d", "#85715a", "#5a6344", "#40482d", "#929e68", "#768f57", "#5d7342", "#89aabb", "#394872", "#2d3a5e", "#1e2946", 
+		"#ffdfca", "#ffd3b6", "#fdc5a2", "#f8bd9b", "#493220", "#321d0a", "#3f3244", "#2d1b35", "#bc2218", "#d24122", "#dc4122", "#dc5d22", "#e2781f", "#19c480", "#f5c525", 
+		"#ba68ca", "#9f90f7", "#654bd3", "#92d0cd", "#ffffff"][mapData[y][x]]
+        ctx.fillRect(x * tilesize, y * tilesize, tilesize, tilesize)
+      }
+    }
+	var fileInput = document.getElementById('filename');
+	var fileName = fileInput.value;
+	if(fileName){
+		var temp = fileName + '.png'
+	} else {
+		var temp = 'download.png'
+	}
+	const link = document.createElement('a');
+    document.body.appendChild(link);
+	link.download = temp;
+	link.href = canvas.toDataURL();
+    link.click();
+    link.remove();
+  }
+
+
+/*
+var items =  map.getItems()
+var rooms =  map.getRooms()
+var doors = map.getDoors()
+ var playerRoom;
+//console.log(this.items)
+for(var i = 0; i < items.length; i++){
+	if (items[i].type == 'start'){
+		playerRoom = items[i].room
+		
+	}
+}
+ctx.strokeStyle = "#00ff00";
+ctx.strokeRect(rooms[3].center.x * tilesize, rooms[3].center.y * tilesize, tilesize, tilesize)
+//console.log(rooms[playerRoom].dimensions)
+
+
+
+ctx.strokeStyle = "#FF0000";
+ctx.strokeRect(rooms[3].x * tilesize, rooms[3].y * tilesize, rooms[3].w* tilesize, rooms[3].h * tilesize);
+console.log(rooms[3].dimensions)
+//console.log(doors[1])
+ctx.strokeStyle = "#0000ff";
+ctx.strokeRect(doors[1].x * tilesize, doors[1].y * tilesize, tilesize, tilesize);
+
+*/
+
+</script>
+</body>
+</html>
