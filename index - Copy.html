@@ -4,11 +4,7 @@
 <head>
 
 
-	<!-- Compiled and minified CSS -->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-
-	<!-- Compiled and minified JavaScript -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
 
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
@@ -18,12 +14,58 @@
 
 	<SCRIPT LANGUAGE="JavaScript">
 		function testResults(form) {
+			var title = form.title.value
+			var moves = form.goal.value
+			var rows = form.rows.value
+			var cols = form.cols.value
+			var items = form.items.value
+			var bgRaw = form.color.value
+			let bg = bgRaw.replace(/#/, "0x");
+			var wild = form.wild.checked
+			var wildMax = form.wildMax.value
+			var wildTotalMax = form.wildTotalMax.value
+			var circle = form.circle.checked
+			var circleMax = form.circleMax.value
+			var circleTotalMax = form.circleTotalMax.value
+			var gems = form.gems.checked
+			var gemMax = form.gemMax.value
+			var gemTotalMax = form.gemTotalMax.value
+			var rover = form.rover.checked
+			var roverCount = form.roverCount.value
+			var ice = form.ice.checked
+			var iceCount = form.iceCount.value
+			
+			var winConditions = {
 
-			var test = form.wild.checked;
-			var text = 'tile: ' + form.title.value + '\n';
-			text += 'wild? ' + test;
+			}
+
+
+			var level = {
+				title: title,
+				rows: rows,
+				cols: cols,
+				items: items,
+				background: bg,
+				allowWild: wild,
+				maxWild: wildMax,
+				maxTotalWild: wildTotalMax,
+				allowCircle: circle,
+				maxCircle: circleMax,
+				maxTotalCircle: circleTotalMax,
+				allowGems: gems,
+				maxGems: gemMax,
+				maxTotalGems: gemTotalMax,
+				movesGoal: moves,
+				allowExtra: ice,
+				extras: iceCount,
+				allowRover: rover,
+				rovers: roverCount,
+				win: winConditions
+				
+			}
+			var text = JSON.stringify(level);
+		
 			alert(text);
-
 		}
 
 
@@ -39,136 +81,260 @@
 </head>
 
 <body>
+	<div class="container">
+		<FORM NAME="myform">
+			<div class="columns is-desktop">
+				<div class="column">
+					<div class="field">
+						<label for="title">Title</label>
+						<INPUT TYPE="text" NAME="title" VALUE="" id="title" class="input is-small">
+					</div>
+				</div>
+				<div class="column">
+					<label for="goal">Moves Goal</label>
+					<INPUT TYPE="number" NAME="goal" VALUE="20" id="goal" max="60" min="10" class="input is-small">
+				</div>
+				<div class="column">
+					<label for="rows">rows</label>
+					<INPUT TYPE="number" NAME="rows" VALUE="8" id="rows" max="12" min="3" class="input is-small">
+				</div>
+				<div class="column">
+					<label for="cols">cols</label>
+					<INPUT TYPE="number" NAME="cols" VALUE="5" id="cols" max="7" min="3" class="input is-small">
+				</div>
+				<div class="column">
+					<label for="items"># Items</label>
+					<INPUT TYPE="number" NAME="items" VALUE="5" id="items" max="6" min="3" class="input is-small">
+				</div>
+				<div class="column">
+					<label for="items">BG</label>
+					<INPUT TYPE="color" NAME="color" VALUE="#fafafa" id="color" class="active" class="input is-small">
+				</div>
+			</div>
+			<div class="columns is-desktop">
+				<div class="column">
+					<label class="checkbox">
+						<input type="checkbox" name="wild" id="wild">
+						Wild
+					</label>
 
-	<FORM NAME="myform">
-		<div class="row">
-			<div class="input-field col sm2">
-				<label for="title">Title</label>
-				<INPUT TYPE="text" NAME="title" VALUE="" id="title">
-			</div>
-			<div class="input-field col sm2">
-				<label for="goal">Moves Goal</label>
-				<INPUT TYPE="text" NAME="goal" VALUE="" id="goal">
-			</div>
-			<div class="input-field col sm2">
-				<label for="rows">rows</label>
-				<INPUT TYPE="number" NAME="rows" VALUE="8" id="rows" max="12" min="3">
-			</div>
-			<div class="input-field col sm2">
-				<label for="cols">rows</label>
-				<INPUT TYPE="number" NAME="cols" VALUE="5" id="cols" max="7" min="3">
-			</div>
-			<div class="input-field col sm2">
-				<label for="items"># Items</label>
-				<INPUT TYPE="number" NAME="items" VALUE="5" id="items" max="6" min="3">
-			</div>
-			<div class="input-field col sm2">
-				<label for="items">BG</label>
-				<INPUT TYPE="color" NAME="color" VALUE="5" id="color" class="active">
-			</div>
-		</div>
-		<div class="row">
-			<div class="switch col sm2">
-				<p>Wild</p>
-				<label>
-					false
-					<input type="checkbox" name="wild" id="wild">
-					<span class="lever"></span>
-					true
-				</label>
-			</div>
-			<div class="input-field col sm2">
-				<label for="wildMax">Max</label>
-				<INPUT TYPE="number" NAME="wildMax" VALUE="0" id="wildMax">
-			</div>
-			<div class="input-field col sm2">
-				<label for="wildTotalMax">Max</label>
-				<INPUT TYPE="number" NAME="wildTotalMax" VALUE="0" id="wildTotalMax">
-			</div>
-
-
-
-			<div class="switch col sm2">
-				<p>Circle</p>
-				<label>
-					false
-					<input type="checkbox" name="circle" id="circle">
-					<span class="lever"></span>
-					true
-				</label>
-			</div>
-			<div class="input-field col sm2">
-				<label for="circleMax">Max</label>
-				<INPUT TYPE="text" NAME="circleMax" VALUE="0" id="circleMax">
-			</div>
-			<div class="input-field col sm2">
-				<label for="circleTotalMax">Max</label>
-				<INPUT TYPE="text" NAME="circleTotalMax" VALUE="0" id="circleTotalMax">
-			</div>
-		</div>
+				</div>
+				<div class="column">
+					<label for="wildMax">Max</label>
+					<INPUT TYPE="number" NAME="wildMax" VALUE="0" id="wildMax" class="input is-small">
+				</div>
+				<div class="column">
+					<label for="wildTotalMax">Max</label>
+					<INPUT TYPE="number" NAME="wildTotalMax" VALUE="0" id="wildTotalMax" class="input is-small">
+				</div>
 
 
 
+				<div class="switch column">
+					<label class="checkbox">
+						<input type="checkbox" name="circle" id="circle">
+						Circle
+					</label>
 
-
-
-		<div class="row">
-			<div class="switch col sm2">
-				<p>Rover</p>
-				<label>
-					false
-					<input type="checkbox" name="rover" id="rover">
-					<span class="lever"></span>
-					true
-				</label>
-			</div>
-			<div class="input-field col sm2">
-				<label for="roverCount">Max</label>
-				<INPUT TYPE="number" NAME="roverCount" VALUE="0" id="roverCount">
-			</div>
-			
-
-
-
-			<div class="switch col sm2">
-				<p>Ice</p>
-				<label>
-					false
-					<input type="checkbox" name="ice" id="ice">
-					<span class="lever"></span>
-					true
-				</label>
-			</div>
-			<div class="input-field col sm2">
-				<label for="iceCount">Max</label>
-				<INPUT TYPE="text" NAME="iceCount" VALUE="0" id="iceCount">
-			</div>
-			
-		</div>
-
-
-		<div class="row">
-			<div class="switch col sm2">
-				<p>Gems</p>
-				<label>
-					false
-					<input type="checkbox" name="gems" id="gems">
-					<span class="lever"></span>
-					true
-				</label>
-			</div>
-			<div class="input-field col sm2">
-				<label for="gemMax">Max</label>
-				<INPUT TYPE="number" NAME="gemMax" VALUE="0" id="gemMax">
-			</div>
-			<div class="input-field col sm2">
-				<label for="gemTotalMax">Max</label>
-				<INPUT TYPE="number" NAME="gemTotalMax" VALUE="0" id="gemTotalMax">
+				</div>
+				<div class="column">
+					<label for="circleMax">Max</label>
+					<INPUT TYPE="number" NAME="circleMax" VALUE="0" id="circleMax" class="input is-small">
+				</div>
+				<div class="column">
+					<label for="circleTotalMax">Max</label>
+					<INPUT TYPE="number" NAME="circleTotalMax" VALUE="0" id="circleTotalMax" class="input is-small">
+				</div>
 			</div>
 
 
 
-		</div>
+
+
+
+			<div class="columns is-desktop">
+				<div class="colunn">
+					<label class="checkbox">
+						<input type="checkbox" name="rover" id="rover">
+						Rover
+					</label>
+
+
+				</div>
+				<div class="column">
+					<label for="roverCount">Max</label>
+					<INPUT TYPE="number" NAME="roverCount" VALUE="0" id="roverCount" class="input is-small">
+				</div>
+
+
+
+
+				<div class="column">
+					<label class="checkbox">
+						<input type="checkbox" name="ice" id="ice">
+						Ice
+					</label>
+
+
+
+				</div>
+				<div class="column">
+
+					<label for="iceCount">Max</label>
+					<INPUT TYPE="number" NAME="iceCount" VALUE="0" id="iceCount" class="input is-small">
+				</div>
+
+			</div>
+
+
+			<div class="columns is-desktop">
+				<div class="column">
+					<label class="checkbox">
+						<input type="checkbox" name="gems" id="gems">
+						Gems
+					</label>
+
+				</div>
+				<div class="column">
+					<label for="gemMax">Max</label>
+					<INPUT TYPE="number" NAME="gemMax" VALUE="0" id="gemMax" class="input is-small">
+				</div>
+				<div class="column">
+					<label for="gemTotalMax">Max</label>
+					<INPUT TYPE="number" NAME="gemTotalMax" VALUE="0" id="gemTotalMax" class="input is-small">
+				</div>
+
+
+
+			</div>
+			<div class="columns is-desktop">
+				<div class="column">
+					<label for="items">1</label>
+					<INPUT TYPE="number" NAME="o1num" VALUE="0" id="o1num" max="30" min="1" class="input is-small">
+					<div class="select is-small">
+						<select name="o1" id="o1">
+							<option>None</option>
+							<option>Red</option>
+							<option>Blue</option>
+							<option>Orange</option>
+							<option>Green</option>
+							<option>Purple</option>
+							<option>Brown</option>
+							<option>square</option>
+							<option>Ice</option>
+							<option>Circle</option>
+							<option>Rover</option>
+							<option>Gem</option>
+
+						</select>
+					</div>
+				</div>
+				<div class="column">
+					<label for="items">2</label>
+					<INPUT TYPE="number" NAME="o2num" VALUE="0" id="o2num" max="30" min="1" class="input is-small">
+					<div class="select is-small">
+						<select name="o2" id="o2">
+							<option>None</option>
+							<option>Red</option>
+							<option>Blue</option>
+							<option>Orange</option>
+							<option>Green</option>
+							<option>Purple</option>
+							<option>Brown</option>
+							<option>square</option>
+							<option>Ice</option>
+							<option>Circle</option>
+							<option>Rover</option>
+							<option>Gem</option>
+
+						</select>
+					</div>
+				</div>
+				<div class="column">
+					<label for="items">3</label>
+					<INPUT TYPE="number" NAME="o3num" VALUE="0" id="o3num" max="30" min="1" class="input is-small">
+					<div class="select is-small">
+						<select name="o3" id="o3">
+							<option>None</option>
+							<option>Red</option>
+							<option>Blue</option>
+							<option>Orange</option>
+							<option>Green</option>
+							<option>Purple</option>
+							<option>Brown</option>
+							<option>square</option>
+							<option>Ice</option>
+							<option>Circle</option>
+							<option>Rover</option>
+							<option>Gem</option>
+
+						</select>
+					</div>
+				</div>
+				<div class="column">
+					<label for="items">4</label>
+					<INPUT TYPE="number" NAME="o4num" VALUE="0" id="o4num" max="30" min="1" class="input is-small">
+					<div class="select is-small">
+						<select name="o4" id="o4">
+							<option>None</option>
+							<option>Red</option>
+							<option>Blue</option>
+							<option>Orange</option>
+							<option>Green</option>
+							<option>Purple</option>
+							<option>Brown</option>
+							<option>square</option>
+							<option>Ice</option>
+							<option>Circle</option>
+							<option>Rover</option>
+							<option>Gem</option>
+
+						</select>
+					</div>
+				</div>
+				<div class="column">
+					<label for="items">5</label>
+					<INPUT TYPE="number" NAME="o5num" VALUE="0" id="o5num" max="30" min="1" class="input is-small">
+					<div class="select is-small">
+						<select name="o5" id="o5">
+							<option>None</option>
+							<option>Red</option>
+							<option>Blue</option>
+							<option>Orange</option>
+							<option>Green</option>
+							<option>Purple</option>
+							<option>Brown</option>
+							<option>square</option>
+							<option>Ice</option>
+							<option>Circle</option>
+							<option>Rover</option>
+							<option>Gem</option>
+
+						</select>
+					</div>
+				</div>
+				<div class="column">
+					<label for="items">6</label>
+					<INPUT TYPE="number" NAME="o6num" VALUE="0" id="o6num" max="30" min="1" class="input is-small">
+					<div class="select is-small">
+						<select name="o16" id="o6">
+							<option>None</option>
+							<option>Red</option>
+							<option>Blue</option>
+							<option>Orange</option>
+							<option>Green</option>
+							<option>Purple</option>
+							<option>Brown</option>
+							<option>square</option>
+							<option>Ice</option>
+							<option>Circle</option>
+							<option>Rover</option>
+							<option>Gem</option>
+
+						</select>
+					</div>
+				</div>
+			</div>
 
 
 
@@ -177,17 +343,16 @@
 
 
 
+			<div class="row">
 
-		<div class="row">
+			</div>
+			<INPUT TYPE="button" NAME="button" Value="Click" onClick="testResults(this.form)">
 
-		</div>
-		<INPUT TYPE="button" NAME="button" Value="Click" onClick="testResults(this.form)">
-
-	</FORM>
-
+		</FORM>
+	</div>
 	<script>
 
-		M.AutoInit();
+
 	</script>
 
 </body>
