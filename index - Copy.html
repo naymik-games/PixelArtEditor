@@ -3,12 +3,12 @@
 
 <head>
 
+	<link rel="stylesheet" href="https://unpkg.com/wingcss"/>
 
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
 
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/style-level.css">
 	<!-- <script src="js/script.js"></script> -->
 
 
@@ -35,11 +35,41 @@
 			var ice = form.ice.checked
 			var iceCount = form.iceCount.value
 			
-			var winConditions = {
-
+			var winConditions = {}
+			
+			if(form.o1num.value > 0){
+				winConditions.red = form.o1num.value
 			}
-
-
+			if(form.o2num.value > 0){
+				winConditions.blue = form.o2num.value
+			}
+			if(form.o3num.value > 0){
+				winConditions.orange = form.o3num.value
+			}
+			if(form.o4num.value > 0){
+				winConditions.green = form.o4num.value
+			}
+			if(form.o5num.value > 0){
+				winConditions.purple = form.o5num.value
+			}
+			if(form.o6num.value > 0){
+				winConditions.brown = form.o6num.value
+			}
+			if(form.o7num.value > 0){
+				winConditions.square = form.o7num.value
+			}
+			if(form.o8num.value > 0){
+				winConditions.circle = form.o8num.value
+			}
+			if(form.o9num.value > 0){
+				winConditions.ice = form.o9num.value
+			}
+			if(form.o10num.value > 0){
+				winConditions.rover = form.o10num.value
+			}
+			if(form.o11num.value > 0){
+				winConditions.gem = form.o11num.value
+			}
 			var level = {
 				title: title,
 				rows: rows,
@@ -83,67 +113,67 @@
 <body>
 	<div class="container">
 		<FORM NAME="myform">
-			<div class="columns is-desktop">
-				<div class="column">
+			<div class="row">
+				<div class="col">
 					<div class="field">
 						<label for="title">Title</label>
-						<INPUT TYPE="text" NAME="title" VALUE="" id="title" class="input is-small">
+						<INPUT TYPE="text" NAME="title" VALUE="" id="title" >
 					</div>
 				</div>
-				<div class="column">
+				<div class="col">
 					<label for="goal">Moves Goal</label>
-					<INPUT TYPE="number" NAME="goal" VALUE="20" id="goal" max="60" min="10" class="input is-small">
+					<INPUT TYPE="number" NAME="goal" VALUE="20" id="goal" max="60" min="10" >
 				</div>
-				<div class="column">
+				<div class="col">
 					<label for="rows">rows</label>
-					<INPUT TYPE="number" NAME="rows" VALUE="8" id="rows" max="12" min="3" class="input is-small">
+					<INPUT TYPE="number" NAME="rows" VALUE="8" id="rows" max="12" min="3" >
 				</div>
-				<div class="column">
+				<div class="col">
 					<label for="cols">cols</label>
-					<INPUT TYPE="number" NAME="cols" VALUE="5" id="cols" max="7" min="3" class="input is-small">
+					<INPUT TYPE="number" NAME="cols" VALUE="5" id="cols" max="7" min="3" >
 				</div>
-				<div class="column">
+				<div class="col">
 					<label for="items"># Items</label>
-					<INPUT TYPE="number" NAME="items" VALUE="5" id="items" max="6" min="3" class="input is-small">
+					<INPUT TYPE="number" NAME="items" VALUE="5" id="items" max="6" min="3" >
 				</div>
-				<div class="column">
+				<div class="col">
 					<label for="items">BG</label>
-					<INPUT TYPE="color" NAME="color" VALUE="#fafafa" id="color" class="active" class="input is-small">
+					<INPUT TYPE="color" NAME="color" VALUE="#fafafa" id="color">
 				</div>
 			</div>
-			<div class="columns is-desktop">
-				<div class="column">
+			<div class="row">
+				<div class="col">
 					<label class="checkbox">
 						<input type="checkbox" name="wild" id="wild">
 						Wild
 					</label>
 
 				</div>
-				<div class="column">
+				<div class="col">
 					<label for="wildMax">Max</label>
-					<INPUT TYPE="number" NAME="wildMax" VALUE="0" id="wildMax" class="input is-small">
+					<INPUT TYPE="number" NAME="wildMax" VALUE="0" id="wildMax" >
 				</div>
-				<div class="column">
+				<div class="col">
 					<label for="wildTotalMax">Max</label>
-					<INPUT TYPE="number" NAME="wildTotalMax" VALUE="0" id="wildTotalMax" class="input is-small">
+					<INPUT TYPE="number" NAME="wildTotalMax" VALUE="0" id="wildTotalMax" >
 				</div>
 
 
 
-				<div class="switch column">
+				<div class="switch col">
 					<label class="checkbox">
 						<input type="checkbox" name="circle" id="circle">
 						Circle
 					</label>
 
 				</div>
-				<div class="column">
+				<div class="col">
 					<label for="circleMax">Max</label>
-					<INPUT TYPE="number" NAME="circleMax" VALUE="0" id="circleMax" class="input is-small">
+					<INPUT TYPE="number" NAME="circleMax" VALUE="0" id="circleMax" >
 				</div>
-				<div class="column">
+				<div class="col">
 					<label for="circleTotalMax">Max</label>
-					<INPUT TYPE="number" NAME="circleTotalMax" VALUE="0" id="circleTotalMax" class="input is-small">
+					<INPUT TYPE="number" NAME="circleTotalMax" VALUE="0" id="circleTotalMax" >
 				</div>
 			</div>
 
@@ -152,7 +182,7 @@
 
 
 
-			<div class="columns is-desktop">
+			<div class="row">
 				<div class="colunn">
 					<label class="checkbox">
 						<input type="checkbox" name="rover" id="rover">
@@ -161,15 +191,15 @@
 
 
 				</div>
-				<div class="column">
+				<div class="col">
 					<label for="roverCount">Max</label>
-					<INPUT TYPE="number" NAME="roverCount" VALUE="0" id="roverCount" class="input is-small">
+					<INPUT TYPE="number" NAME="roverCount" VALUE="0" id="roverCount" >
 				</div>
 
 
 
 
-				<div class="column">
+				<div class="col">
 					<label class="checkbox">
 						<input type="checkbox" name="ice" id="ice">
 						Ice
@@ -178,161 +208,91 @@
 
 
 				</div>
-				<div class="column">
+				<div class="col">
 
 					<label for="iceCount">Max</label>
-					<INPUT TYPE="number" NAME="iceCount" VALUE="0" id="iceCount" class="input is-small">
+					<INPUT TYPE="number" NAME="iceCount" VALUE="0" id="iceCount" >
 				</div>
 
 			</div>
 
 
-			<div class="columns is-desktop">
-				<div class="column">
+			<div class="row">
+				<div class="col">
 					<label class="checkbox">
 						<input type="checkbox" name="gems" id="gems">
 						Gems
 					</label>
 
 				</div>
-				<div class="column">
+				<div class="col">
 					<label for="gemMax">Max</label>
-					<INPUT TYPE="number" NAME="gemMax" VALUE="0" id="gemMax" class="input is-small">
+					<INPUT TYPE="number" NAME="gemMax" VALUE="0" id="gemMax" >
 				</div>
-				<div class="column">
+				<div class="col">
 					<label for="gemTotalMax">Max</label>
-					<INPUT TYPE="number" NAME="gemTotalMax" VALUE="0" id="gemTotalMax" class="input is-small">
+					<INPUT TYPE="number" NAME="gemTotalMax" VALUE="0" id="gemTotalMax" >
 				</div>
 
 
 
 			</div>
-			<div class="columns is-desktop">
-				<div class="column">
-					<label for="items">1</label>
-					<INPUT TYPE="number" NAME="o1num" VALUE="0" id="o1num" max="30" min="1" class="input is-small">
-					<div class="select is-small">
-						<select name="o1" id="o1">
-							<option>None</option>
-							<option>Red</option>
-							<option>Blue</option>
-							<option>Orange</option>
-							<option>Green</option>
-							<option>Purple</option>
-							<option>Brown</option>
-							<option>square</option>
-							<option>Ice</option>
-							<option>Circle</option>
-							<option>Rover</option>
-							<option>Gem</option>
-
-						</select>
-					</div>
+			<div class="row">
+				<div class="col">
+					<label for="items">Red</label>
+					<INPUT TYPE="number" NAME="o1num" VALUE="0" id="o1num" max="30" min="0" >
+					
 				</div>
-				<div class="column">
-					<label for="items">2</label>
-					<INPUT TYPE="number" NAME="o2num" VALUE="0" id="o2num" max="30" min="1" class="input is-small">
-					<div class="select is-small">
-						<select name="o2" id="o2">
-							<option>None</option>
-							<option>Red</option>
-							<option>Blue</option>
-							<option>Orange</option>
-							<option>Green</option>
-							<option>Purple</option>
-							<option>Brown</option>
-							<option>square</option>
-							<option>Ice</option>
-							<option>Circle</option>
-							<option>Rover</option>
-							<option>Gem</option>
-
-						</select>
-					</div>
+				<div class="col">
+					<label for="items">Blue</label>
+					<INPUT TYPE="number" NAME="o2num" VALUE="0" id="o2num" max="30" min="0" >
+					
+					
 				</div>
-				<div class="column">
-					<label for="items">3</label>
-					<INPUT TYPE="number" NAME="o3num" VALUE="0" id="o3num" max="30" min="1" class="input is-small">
-					<div class="select is-small">
-						<select name="o3" id="o3">
-							<option>None</option>
-							<option>Red</option>
-							<option>Blue</option>
-							<option>Orange</option>
-							<option>Green</option>
-							<option>Purple</option>
-							<option>Brown</option>
-							<option>square</option>
-							<option>Ice</option>
-							<option>Circle</option>
-							<option>Rover</option>
-							<option>Gem</option>
-
-						</select>
-					</div>
+				<div class="col">
+					<label for="items">Orange</label>
+					<INPUT TYPE="number" NAME="o3num" VALUE="0" id="o3num" max="30" min="0" >
+					
 				</div>
-				<div class="column">
-					<label for="items">4</label>
-					<INPUT TYPE="number" NAME="o4num" VALUE="0" id="o4num" max="30" min="1" class="input is-small">
-					<div class="select is-small">
-						<select name="o4" id="o4">
-							<option>None</option>
-							<option>Red</option>
-							<option>Blue</option>
-							<option>Orange</option>
-							<option>Green</option>
-							<option>Purple</option>
-							<option>Brown</option>
-							<option>square</option>
-							<option>Ice</option>
-							<option>Circle</option>
-							<option>Rover</option>
-							<option>Gem</option>
-
-						</select>
-					</div>
+				<div class="col">
+					<label for="items">Green</label>
+					<INPUT TYPE="number" NAME="o4num" VALUE="0" id="o4num" max="30" min="0" >
+					
 				</div>
-				<div class="column">
-					<label for="items">5</label>
-					<INPUT TYPE="number" NAME="o5num" VALUE="0" id="o5num" max="30" min="1" class="input is-small">
-					<div class="select is-small">
-						<select name="o5" id="o5">
-							<option>None</option>
-							<option>Red</option>
-							<option>Blue</option>
-							<option>Orange</option>
-							<option>Green</option>
-							<option>Purple</option>
-							<option>Brown</option>
-							<option>square</option>
-							<option>Ice</option>
-							<option>Circle</option>
-							<option>Rover</option>
-							<option>Gem</option>
-
-						</select>
-					</div>
+				<div class="col">
+					<label for="items">Purple</label>
+					<INPUT TYPE="number" NAME="o5num" VALUE="0" id="o5num" max="30" min="0" >
+					
 				</div>
-				<div class="column">
-					<label for="items">6</label>
-					<INPUT TYPE="number" NAME="o6num" VALUE="0" id="o6num" max="30" min="1" class="input is-small">
-					<div class="select is-small">
-						<select name="o16" id="o6">
-							<option>None</option>
-							<option>Red</option>
-							<option>Blue</option>
-							<option>Orange</option>
-							<option>Green</option>
-							<option>Purple</option>
-							<option>Brown</option>
-							<option>square</option>
-							<option>Ice</option>
-							<option>Circle</option>
-							<option>Rover</option>
-							<option>Gem</option>
-
-						</select>
-					</div>
+				<div class="col">
+					<label for="items">Brown</label>
+					<INPUT TYPE="number" NAME="o6num" VALUE="0" id="o6num" max="30" min="0" >
+					
+				</div>
+				<div class="col">
+					<label for="items">Square</label>
+					<INPUT TYPE="number" NAME="o7num" VALUE="0" id="o7num" max="30" min="0" >
+					
+				</div>
+				<div class="col">
+					<label for="items">Circle</label>
+					<INPUT TYPE="number" NAME="o8num" VALUE="0" id="o8num" max="30" min="0" >
+					
+				</div>
+				<div class="col">
+					<label for="items">Ice</label>
+					<INPUT TYPE="number" NAME="o9num" VALUE="0" id="o9num" max="30" min="0" >
+					
+				</div>
+				<div class="col">
+					<label for="items">Rover</label>
+					<INPUT TYPE="number" NAME="o10num" VALUE="0" id="o10num" max="30" min="0" >
+					
+				</div>
+				<div class="col">
+					<label for="items">Gem</label>
+					<INPUT TYPE="number" NAME="o11num" VALUE="0" id="o11num" max="30" min="0" >
+					
 				</div>
 			</div>
 
