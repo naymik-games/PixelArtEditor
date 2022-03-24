@@ -34,9 +34,29 @@
 			var roverCount = form.roverCount.value
 			var ice = form.ice.checked
 			var iceCount = form.iceCount.value
-			
+			var fire = form.fire.checked
+			var fireCount = form.fireCount.value
+			var bomb = form.bomb.checked
+			var bombCount = form.bombCount.value
 			var winConditions = {}
 			
+			var blockArray = []
+			
+			var checkBox = document.getElementById("block");
+			if(checkBox.checked){
+				var x = document.getElementById("main").querySelectorAll(".cb-block"); 
+			
+				for(var i = 0; i < x.length; i++){
+					if(x[i].checked){
+					var r = parseInt(x[i].getAttribute('data-row'));
+					var c = parseInt(x[i].getAttribute('data-col'));
+						blockArray.push({row: r, col: c})
+					}
+					
+				}
+			}
+			
+			//console.log(blockArray)
 			if(form.o1num.value > 0){
 				winConditions.red = form.o1num.value
 			}
@@ -70,6 +90,9 @@
 			if(form.o11num.value > 0){
 				winConditions.gem = form.o11num.value
 			}
+			if(form.o12num.value > 0){
+				winConditions.bomb = form.o12num.value
+			}
 			var level = {
 				title: title,
 				rows: rows,
@@ -88,18 +111,83 @@
 				movesGoal: moves,
 				allowExtra: ice,
 				extras: iceCount,
+				allowFire: fire,
+				maxFire: fireCount,
+				allowBomb: bomb,
+				maxBomb: bombCount,
 				allowRover: rover,
 				rovers: roverCount,
-				win: winConditions
+				win: winConditions,
+				allowBlocks: checkBox.checked,
+				blocks: blockArray
 				
 			}
 			var text = JSON.stringify(level);
 		
-			alert(text);
+			 document.getElementById('output').value = text;
+			 
+			
 		}
+		function copyText(){
+			let textarea = document.getElementById('output');
+			 textarea.select();
+			document.execCommand("copy");
+		}
+		function myFunction(){
+			 var checkBox = document.getElementById("block");
+			  // Get the output text
+			  
 
+			  // If the checkbox is checked, display the output text
+			  if (checkBox.checked == true){
+				grid()
+			  } else {
+				//text.style.display = "none";
+				const element = document.getElementById("main");
+				element.remove();
+			  }
+		}
+		/* Creating the grid */
+		function grid() {
+			var el = document.getElementById("grid");
+			var rows = document.getElementById("rows").value
+			var cols = document.getElementById("cols").value
+			var container = document.createElement("div");
+			container.id = "main";
+			container.className = "container";
 
-
+			for (i=0; i<rows; i+=1) {
+				var row = document.createElement("div");
+				row.className = "row";
+				row.id = "row" + i;
+			  
+				for (k=0; k<cols; k+=1) {
+					var box = document.createElement("div"); 
+					box.className = "col-1";
+					box.id = "col" + k;
+					
+					var checkbox = document.createElement('input');
+					checkbox.type = 'checkbox';
+					checkbox.id = 'car';
+					checkbox.className = 'cb-block'
+					checkbox.name = 'interest';
+					checkbox.setAttribute('data-row', i)
+					checkbox.setAttribute('data-col', k)
+					var label = document.createElement('label')
+					label.htmlFor = 'car';
+					label.appendChild(document.createTextNode(k + ',' + i));
+					
+					 box.appendChild(checkbox);
+					box.appendChild(label);
+					
+					row.appendChild(box);
+				};
+			  
+				container.appendChild(row);      
+			};
+		  
+			el.appendChild(container);
+		};
 
 
 
@@ -175,6 +263,21 @@
 					<label for="circleTotalMax">Max</label>
 					<INPUT TYPE="number" NAME="circleTotalMax" VALUE="0" id="circleTotalMax" >
 				</div>
+				<div class="col">
+					<label class="checkbox">
+						<input type="checkbox" name="gems" id="gems">
+						Gems
+					</label>
+
+				</div>
+				<div class="col">
+					<label for="gemMax">Max</label>
+					<INPUT TYPE="number" NAME="gemMax" VALUE="0" id="gemMax" >
+				</div>
+				<div class="col">
+					<label for="gemTotalMax">Max</label>
+					<INPUT TYPE="number" NAME="gemTotalMax" VALUE="0" id="gemTotalMax" >
+				</div>
 			</div>
 
 
@@ -208,90 +311,123 @@
 
 
 				</div>
+				
 				<div class="col">
 
 					<label for="iceCount">Max</label>
 					<INPUT TYPE="number" NAME="iceCount" VALUE="0" id="iceCount" >
 				</div>
+				<div class="col">
+					<label class="checkbox">
+						<input type="checkbox" name="fire" id="fire">
+						Fire
+					</label>
+
+
+
+				</div>
+				<div class="col">
+
+					<label for="fireCount">Max</label>
+					<INPUT TYPE="number" NAME="fireCount" VALUE="0" id="fireCount" >
+				</div>
+				<div class="col">
+					<label class="checkbox">
+						<input type="checkbox" name="bomb" id="bomb">
+						Bomb
+					</label>
+
+
+
+				</div>
+				<div class="col">
+
+					<label for="bombCount">Max</label>
+					<INPUT TYPE="number" NAME="bombCount" VALUE="0" id="bombCount" >
+				</div>
 
 			</div>
-
-
 			<div class="row">
 				<div class="col">
 					<label class="checkbox">
-						<input type="checkbox" name="gems" id="gems">
-						Gems
+						<input type="checkbox" name="block" id="block" onclick="myFunction()">
+						Use Blocks
 					</label>
 
 				</div>
+			</div>
+
+			<div class="row" id="grid">
+				
+
+
+
+			</div>
+			<div class="row">
 				<div class="col">
-					<label for="gemMax">Max</label>
-					<INPUT TYPE="number" NAME="gemMax" VALUE="0" id="gemMax" >
+					<h5>Win conditions: max 6</h5>
 				</div>
-				<div class="col">
-					<label for="gemTotalMax">Max</label>
-					<INPUT TYPE="number" NAME="gemTotalMax" VALUE="0" id="gemTotalMax" >
-				</div>
-
-
-
 			</div>
 			<div class="row">
 				<div class="col">
 					<label for="items">Red</label>
-					<INPUT TYPE="number" NAME="o1num" VALUE="0" id="o1num" max="30" min="0" >
+					<INPUT TYPE="number" NAME="o1num" VALUE="0" id="o1num" max="60" min="0" >
 					
 				</div>
 				<div class="col">
 					<label for="items">Blue</label>
-					<INPUT TYPE="number" NAME="o2num" VALUE="0" id="o2num" max="30" min="0" >
+					<INPUT TYPE="number" NAME="o2num" VALUE="0" id="o2num" max="60" min="0" >
 					
 					
 				</div>
 				<div class="col">
 					<label for="items">Orange</label>
-					<INPUT TYPE="number" NAME="o3num" VALUE="0" id="o3num" max="30" min="0" >
+					<INPUT TYPE="number" NAME="o3num" VALUE="0" id="o3num" max="60" min="0" >
 					
 				</div>
 				<div class="col">
 					<label for="items">Green</label>
-					<INPUT TYPE="number" NAME="o4num" VALUE="0" id="o4num" max="30" min="0" >
+					<INPUT TYPE="number" NAME="o4num" VALUE="0" id="o4num" max="60" min="0" >
 					
 				</div>
 				<div class="col">
 					<label for="items">Purple</label>
-					<INPUT TYPE="number" NAME="o5num" VALUE="0" id="o5num" max="30" min="0" >
+					<INPUT TYPE="number" NAME="o5num" VALUE="0" id="o5num" max="60" min="0" >
 					
 				</div>
 				<div class="col">
 					<label for="items">Brown</label>
-					<INPUT TYPE="number" NAME="o6num" VALUE="0" id="o6num" max="30" min="0" >
+					<INPUT TYPE="number" NAME="o6num" VALUE="0" id="o6num" max="60" min="0" >
 					
 				</div>
 				<div class="col">
 					<label for="items">Square</label>
-					<INPUT TYPE="number" NAME="o7num" VALUE="0" id="o7num" max="30" min="0" >
+					<INPUT TYPE="number" NAME="o7num" VALUE="0" id="o7num" max="60" min="0" >
 					
 				</div>
 				<div class="col">
 					<label for="items">Circle</label>
-					<INPUT TYPE="number" NAME="o8num" VALUE="0" id="o8num" max="30" min="0" >
+					<INPUT TYPE="number" NAME="o8num" VALUE="0" id="o8num" max="60" min="0" >
 					
 				</div>
 				<div class="col">
 					<label for="items">Ice</label>
-					<INPUT TYPE="number" NAME="o9num" VALUE="0" id="o9num" max="30" min="0" >
+					<INPUT TYPE="number" NAME="o9num" VALUE="0" id="o9num" max="60" min="0" >
 					
 				</div>
 				<div class="col">
 					<label for="items">Rover</label>
-					<INPUT TYPE="number" NAME="o10num" VALUE="0" id="o10num" max="30" min="0" >
+					<INPUT TYPE="number" NAME="o10num" VALUE="0" id="o10num" max="60" min="0" >
 					
 				</div>
 				<div class="col">
 					<label for="items">Gem</label>
-					<INPUT TYPE="number" NAME="o11num" VALUE="0" id="o11num" max="30" min="0" >
+					<INPUT TYPE="number" NAME="o11num" VALUE="0" id="o11num" max="60" min="0" >
+					
+				</div>
+				<div class="col">
+					<label for="items">bomb</label>
+					<INPUT TYPE="number" NAME="o12num" VALUE="0" id="o12num" max="60" min="0" >
 					
 				</div>
 			</div>
@@ -306,10 +442,22 @@
 			<div class="row">
 
 			</div>
-			<INPUT TYPE="button" NAME="button" Value="Click" onClick="testResults(this.form)">
+			<INPUT TYPE="button" NAME="button" Value="Generate" onClick="testResults(this.form)">
 
 		</FORM>
+		<div class="row">
+			<div class="col">
+				<textarea id="output"></textarea><br>
+				<button onClick="copyText()">Copy</button>
+				
+			</div>
+		</div>
+		
 	</div>
+	<label class="cb-container">One
+  <input type="checkbox" checked="checked">
+  <span class="checkmark"></span>
+</label>
 	<script>
 
 

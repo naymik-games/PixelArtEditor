@@ -1,0 +1,321 @@
+<!doctype html>
+<meta charset="utf-8">
+
+<head>
+
+	<!-- <link rel="stylesheet" href="https://unpkg.com/wingcss"/> -->
+
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mini.css/3.0.1/mini-default.min.css"> -->
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<!-- Google Fonts -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
+
+<!-- CSS Reset -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
+
+<!-- Milligram CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css">
+
+
+	<link rel="stylesheet" href="css/style-level-ballz.css">
+	<!-- <script src="js/script.js"></script> -->
+
+
+	<SCRIPT LANGUAGE="JavaScript">
+	var colorArray = ['#FFFFFF', '#FF6633', '#FFB399', '#FF33FF', '#FFFF99', '#00B3E6', 
+		  '#E6B333', '#3366E6', '#999966', '#99FF99', '#B34D4D',
+		  '#80B300', '#809900', '#E6B3B3', '#6680B3', '#66991A', 
+		  '#FF99E6', '#CCFF1A', '#FF1A66', '#E6331A', '#33FFCC',
+		  '#66994D', '#B366CC', '#4D8000', '#B33300', '#CC80CC', 
+		  '#66664D', '#991AFF', '#E666FF', '#4DB3FF', '#1AB399',
+		  '#E666B3', '#33991A', '#CC9999', '#B3B31A', '#00E680', 
+		  '#4D8066', '#809980', '#E6FF80', '#1AFF33', '#999933',
+		  '#FF3380', '#CCCC00', '#66E64D', '#4D80CC', '#9900B3', 
+		  '#E64D66', '#4DB380', '#FF4D4D', '#99E6E6', '#6666FF'];
+		function testResults(form) {
+			
+			var moves = form.goal.value
+			var rows = form.rows.value
+			var cols = form.cols.value
+			var max = form.max.value
+			var balls = form.balls.value
+			var startL = form.startL.value
+			var startV = form.startV.value
+		 
+			
+			var blockArray = []
+			
+			var checkBox = document.getElementById("block");
+			if(checkBox.checked){
+				var x = document.getElementById("grid").querySelectorAll(".pixel"); 
+			
+				for(var i = 0; i < x.length; i++){	
+						blockArray.push(parseInt(x[i].innerHTML))
+				}
+				var output = JSON.stringify(listToMatrix(blockArray, cols))
+			} else {
+				var output = '[]'
+			}
+			
+			
+			
+			
+			
+			//{col: 7, row: 10, max: 5, startBalls: 5, startLines: 5, startValue: 5, levelGoal: 10, prefab: [[1,1,1,1,1,1,1],[1,0,0,0,0,0,1],[1,0,0,1,0,0,1],[1,0,1,0,1,0,1],[1,0,0,1,0,0,1],[1,0,1,0,1,0,1],[1,0,0,1,0,0,1]]}, 
+	/*
+			gameOptions.blocksPerLine = 8,
+        gameOptions.blockLines = 11,
+        gameOptions.maxBlocksPerLine = 6,
+        gameOptions.numBallsStart = 1,
+        gameOptions.numLinesStart = 1,
+        gameOptions.startingValue = 0,
+        gameOptions.levelGoal = 300
+        this.allowBlocked = false;*/
+			
+			var level = '{ col: '
+				level += cols
+				level += ',row: ' + rows 
+				level += ',max: ' + max, 
+				level += ',startBalls: ' + balls
+				level += ',startLines: ' + startL 
+				level += ',startValue: ' + startV 
+				level += ',levelGoal: ' + moves
+				level += ', prefab: ' + output
+				level += ' }'
+				//prefab: blockArray
+				
+			//var text = JSON.stringify(level);
+		var text = level
+			 document.getElementById('output').value = text;
+			 
+			
+		}
+		function copyText(){
+			let textarea = document.getElementById('output');
+			 textarea.select();
+			document.execCommand("copy");
+		}
+		function toggleGrid(){
+			 var checkBox = document.getElementById("block");
+			  // Get the output text
+			  
+
+			  // If the checkbox is checked, display the output text
+			  if (checkBox.checked == true){
+				grid()
+			  } else {
+				//text.style.display = "none";
+				const element = document.getElementById("holder");
+				element.remove();
+				const element2 = document.getElementById("val");
+				element2.remove();
+			  }
+		}
+		/* Creating the grid */
+		function grid(){
+			var val = document.getElementById("value-select");
+			var valInput = document.createElement('input');
+			valInput.type = 'number';
+			valInput.id = 'val';
+			valInput.value = 0;
+			val.appendChild(valInput)
+			
+			
+			var el = document.getElementById("grid");
+			var holder = document.createElement("div");
+			holder.id = "holder";
+			
+			
+			var rows = document.getElementById("startL").value
+			var cols = document.getElementById("cols").value
+			holder.style.width = 25*cols +'px'
+			for (i=0; i<rows * cols; i++) {
+				var cell = document.createElement("div");
+				cell.className = "pixel";
+				cell.id = i
+				cell.innerHTML = 0
+				holder.appendChild(cell);
+			}
+			el.appendChild(holder);
+			 let boxes = document.querySelectorAll(".pixel");
+
+			  Array.from(boxes, function(box) {
+				box.addEventListener("click", function() {
+				  //alert(this.classList[0]);
+				  var v = document.getElementById("val");
+				  this.style.backgroundColor = colorArray[v.value]
+				   this.innerHTML = v.value
+				});
+			  });
+		}
+		function grid_() {
+			var el = document.getElementById("grid");
+			var rows = document.getElementById("rows").value
+			var cols = document.getElementById("cols").value
+			var container = document.createElement("div");
+			container.id = "main";
+			container.className = "container";
+
+			for (i=0; i<rows; i+=1) {
+				var row = document.createElement("div");
+				row.className = "row";
+				row.id = "row" + i;
+			  
+				for (k=0; k<cols; k+=1) {
+					var box = document.createElement("div"); 
+					box.className = "column";
+					box.id = "col" + k;
+					
+					var input = document.createElement('input');
+					input.type = 'number';
+					input.id = 'car';
+					input.size = 2
+					input.className = 'cb-block'
+					input.name = 'interest';
+					
+					//var label = document.createElement('label')
+					//label.htmlFor = 'car';
+					//label.appendChild(document.createTextNode(k + ',' + i));
+					
+					 box.appendChild(input);
+					//box.appendChild(label);
+					
+					row.appendChild(box);
+				};
+			  
+				container.appendChild(row);      
+			};
+		  
+			el.appendChild(container);
+		};
+
+		function listToMatrix(list, elementsPerSubArray) {
+			var matrix = [], i, k;
+
+			for (i = 0, k = -1; i < list.length; i++) {
+				if (i % elementsPerSubArray === 0) {
+					k++;
+					matrix[k] = [];
+				}
+
+				matrix[k].push(list[i]);
+			}
+
+			return matrix;
+		}
+
+
+
+	</SCRIPT>
+
+
+
+</head>
+
+<body>
+	<div class="container">
+		<FORM NAME="myform">
+			<div class="row">
+				
+				
+
+				<div class="column">
+					<label for="goal">Moves Goal</label>
+					<INPUT TYPE="number" NAME="goal" VALUE="20" id="goal" max="60" min="10" >
+				</div>
+				<div class="column">
+					<label for="rows">rows</label>
+					<INPUT TYPE="number" NAME="rows" VALUE="8" id="rows" max="16" min="7" >
+				</div>
+				<div class="column">
+					<label for="cols">cols</label>
+					<INPUT TYPE="number" NAME="cols" VALUE="5" id="cols" max="14" min="5" >
+				</div>
+				<div class="column">
+					<label for="max">Max</label>
+					<INPUT TYPE="number" NAME="max" VALUE="5" id="max" max="7" min="3" >
+				</div>
+				<div class="column">
+					<label for="balls"># Balls</label>
+					<INPUT TYPE="number" NAME="balls" VALUE="5" id="balls" max="50" min="1" >
+				</div>
+				<div class="column">
+					<label for="startL">Start Lines</label>
+					<INPUT TYPE="number" NAME="startL" VALUE="5" id="startL" max="6" min="3" >
+				</div>
+				<div class="column">
+					<label for="startV">Start Value</label>
+					<INPUT TYPE="number" NAME="startV" VALUE="1" id="startV" max="50" min="1" >
+				</div>
+				
+			</div>
+			<div class="row">
+				<div class="column">
+				<p>Ratios: 5x6, 5x7,6x8*,6x9, 7x9, 7x10*, 8x10, 8x11*, 8x12, 9x12, 9x13*, 10x13, 10x14*, 11x14, 11x15*, 12x16, 12x17*, 13x18*, 13x19, 14x19*</p>
+				</div>
+			</div>
+				
+			<div class="row">
+				<div class="col">
+					<label class="checkbox">
+						<input type="checkbox" name="block" id="block" onclick="toggleGrid()">
+						Use Blocks
+					</label>
+
+				</div>
+			</div>
+			<!-- <div class="row" id="grid"></div> -->
+			<div class="row" >
+			
+				<div class="column column-25" id="value-select">
+					
+				</div>
+
+			</div>
+			<div class="row" >
+			
+				<div class="column">
+					<div class="canvas" id="grid"></div>
+				</div>
+
+
+
+			</div>
+			
+
+
+
+
+
+
+
+
+			<div class="row">
+				<div class="column column-25">
+				<INPUT TYPE="button" NAME="button" Value="Generate" onClick="testResults(this.form)">
+				</div>
+			</div>
+			
+
+		</FORM>
+		<div class="row">
+			<div class="column">
+				<textarea id="output"></textarea><br>
+				<button onClick="copyText()">Copy</button>
+				
+			</div>
+		</div>
+		
+	</div>
+	<label class="cb-container">One
+  <input type="checkbox" checked="checked">
+  <span class="checkmark"></span>
+</label>
+	<script>
+
+
+	</script>
+
+</body>
+
+</html>
